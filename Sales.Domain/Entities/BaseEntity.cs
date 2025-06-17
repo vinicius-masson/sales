@@ -1,0 +1,23 @@
+﻿using Sales.Common.Validation;
+
+public class BaseEntity : IComparable<BaseEntity>
+{
+    public Guid Id { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime? UpdatedAt { get; private set; }
+
+    public Task<IEnumerable<ValidationErrorDetail>> ValidateAsync()
+    {
+        return Validator.ValidateAsync(this);
+    }
+
+    public int CompareTo(BaseEntity? other)
+    {
+        if (other == null)
+        {
+            return 1;
+        }
+
+        return other!.Id.CompareTo(Id);
+    }
+}
