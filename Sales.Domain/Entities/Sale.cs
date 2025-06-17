@@ -30,17 +30,6 @@ namespace Sales.Domain.Entities
 
         public void SetBranch(BranchOffice brancOfficeh) => BranchOffice = brancOfficeh;
 
-        public ValidationResultDetail Validate()
-        {
-            var validator = new SaleValidator();
-            var result = validator.Validate(this);
-
-            return new ValidationResultDetail
-            {
-                IsValid = result.IsValid,
-                Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
-            };
-        }
         public void CancelSale() => Status = SaleStatus.Cancelled;
 
         public void AddItem(SaleItem saleItem)

@@ -13,7 +13,7 @@ namespace Sales.Domain.Entities
             Product = product;
             Status = SaleItemStatus.NotCancelled;
 
-            Validate();
+            ValidateAsync();
             ApplyBusinessRules();
         }
 
@@ -33,29 +33,17 @@ namespace Sales.Domain.Entities
             CalculateTotalPrice();
         }
 
-        public ValidationResultDetail Validate()
-        {
-            var validator = new SaleItemValidator();
-            var result = validator.Validate(this);
-
-            return new ValidationResultDetail
-            {
-                IsValid = result.IsValid,
-                Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
-            };
-        }
-
         public void UpdateQuantity(int quantity)
         {
             Quantity = quantity;
-            Validate();
+            ValidateAsync();
             ApplyBusinessRules();
         }
 
         public void UpdatePrice(decimal price)
         {
             UnitPrice = price;
-            Validate();
+            ValidateAsync();
             ApplyBusinessRules();
         }
 
